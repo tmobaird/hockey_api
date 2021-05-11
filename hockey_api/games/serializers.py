@@ -16,6 +16,7 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
     start = TimeField(required=True)
     homeTeamScore = IntegerField(required=True)
     awayTeamScore = IntegerField(required=True)
+    final = serializers.BooleanField(required=False)
     homeTeam = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), required=True, write_only=True)
     awayTeam = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), required=True, write_only=True)
     home = TeamSerializer(read_only=True)
@@ -24,4 +25,4 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Game
         fields = ['id', 'start', 'homeTeamScore', 'awayTeamScore', 'homeTeam', 'awayTeam', 'homeTeam', 'awayTeam',
-                  'home', 'away']
+                  'home', 'away', 'final']
