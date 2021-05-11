@@ -7,6 +7,9 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    def record(self):
+        return '1-1-0'
+
 
 class Game(models.Model):
     start = models.TimeField()

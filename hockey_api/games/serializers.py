@@ -3,8 +3,13 @@ from rest_framework.fields import IntegerField, TimeField
 
 from games.models import Game, Team
 
-
 class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'record']
+        querySet = Team.objects.all()
+
+class TeamQuickSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ['id', 'name']
@@ -19,8 +24,8 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
     final = serializers.BooleanField(required=False)
     homeTeam = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), required=True, write_only=True)
     awayTeam = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), required=True, write_only=True)
-    home = TeamSerializer(read_only=True)
-    away = TeamSerializer(read_only=True)
+    home = TeamQuickSerializer(read_only=True)
+    away = TeamQuickSerializer(read_only=True)
 
     class Meta:
         model = Game
