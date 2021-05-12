@@ -13,7 +13,7 @@ x Automated testing set up
 x Basic Teams API (index, show, create, update, destroy)
 x Basic Games API (index, show, create, update, destroy)
 x Rename fields to be snake cased
-x Add TravisCI for builds
+x Add CircleCI for builds
 x Track api requests
 x Track requesting user (no auth)
 x Add Auth for POST/PUT
