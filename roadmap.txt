@@ -1,0 +1,19 @@
+Roadmap
+
+MVP Goals:
+- Smallest set of API capabilities to be useful to users
+- Ability to track and measure usage
+    - How many requests
+    - How many users
+    - How many unique users
+    - What API resources are most requested
+
+Stories (icons ✓x):
+x Automated testing set up
+x Basic Teams API (index, show, create, update, destroy)
+x Basic Games API (index, show, create, update, destroy)
+x Rename fields to be snake cased
+x Track requests
+x Track requesting user (no auth)
+x Add Auth for POST/PUT
+x Create options for Game period
