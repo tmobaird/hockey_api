@@ -9,7 +9,7 @@ MVP Goals:
     - What API resources are most requested
 
 Stories (icons ✓x):
-x Automated testing set up
+✓ Automated testing set up
 x Basic Teams API (index, show, create, update, destroy)
 x Basic Games API (index, show, create, update, destroy)
 x Rename fields to be snake cased
