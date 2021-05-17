@@ -10,18 +10,19 @@ MVP Goals:
 
 Stories (icons ✓x):
 ✓ Automated testing set up
-x Basic Teams API (index, show, create, update, destroy)
+✓ Basic Teams API (index, show, create, update, destroy)
     ✓ index
     ✓ show
     ✓ create
     ✓ update
-    x destroy
-x Basic Games API (index, show, create, update, destroy)
+    ✓ destroy
+✓ Basic Games API (index, show, create, update, destroy)
     ✓ index
     ✓ show
-    x create
-    x update
-    x destroy
+    ✓ create
+    ✓ update
+    ✓ destroy
+x Nested Games List under Team API (just index)
 x Rename fields to be snake cased
 x Add CircleCI for builds
 x Track api requests

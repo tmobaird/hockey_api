@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework.test import APITestCase
 
 from games.models import Game, Team
@@ -25,12 +26,49 @@ class GameApiTestCase(APITestCase):
         self.assertIn('homeTeamScore', response.data)
         self.assertIn('awayTeamScore', response.data)
         self.assertIn('final', response.data)
+        self.assertIn('period', response.data)
         self.assertEqual(len(response.data['home'].keys()), 2)
         self.assertIn('id', response.data['home'])
         self.assertIn('name', response.data['home'])
         self.assertEqual(len(response.data['away'].keys()), 2)
         self.assertIn('id', response.data['away'])
         self.assertIn('name', response.data['away'])
+
+    def test_create(self):
+        self.assertEqual(Game.objects.count(), 0)
+        response = self.client.post('/api/games/', {'start': '01:00:000', 'homeTeamScore': 0, 'awayTeamScore': 0,
+                                                    'homeTeam': self.home_team.id, 'awayTeam': self.away_team.id,
+                                                    'period': 'F', 'final': True}, format='json')
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Game.objects.count(), 1)
+
+    def test_update(self):
+        game = Game.objects.create(start='01:00:00', period='1', homeTeam=self.home_team, awayTeam=self.away_team)
+        response = self.client.put('/api/games/{}/'.format(game.id),
+                                   {'start': '01:00:000', 'homeTeamScore': 2, 'awayTeamScore': 0,
+                                    'homeTeam': self.home_team.id, 'awayTeam': self.away_team.id,
+                                    'period': 'F', 'final': True}, format='json')
+        self.assertEqual(response.status_code, 200)
+        game = Game.objects.get(pk=game.id)
+        self.assertEqual(game.period, 'F')
+        self.assertEqual(game.homeTeamScore, 2)
+        self.assertEqual(game.awayTeamScore, 0)
+        self.assertEqual(game.final, True)
+
+    def test_update_returns_400(self):
+        response = self.client.put('/api/games/99999/',
+                                   {'start': '01:00:000', 'homeTeamScore': 2, 'awayTeamScore': 0,
+                                    'homeTeam': self.home_team.id, 'awayTeam': self.away_team.id,
+                                    'period': 'F', 'final': True}, format='json')
+        self.assertEqual(response.status_code, 404)
+
+    def test_destroy(self):
+        game = Game.objects.create(start='01:00:00', period='1', homeTeam=self.home_team, awayTeam=self.away_team)
+
+        response = self.client.delete('/api/games/{}/'.format(game.id), format='json')
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(Game.objects.count(), 0)
+        self.assertEqual(Team.objects.count(), 2)
 
 
 class TeamApiTestCase(APITestCase):
@@ -60,7 +98,13 @@ class TeamApiTestCase(APITestCase):
         self.assertEqual(Team.objects.latest('id').name, 'New Team Name')
 
     def test_update(self):
-        response = self.client.put('/api/teams/{}/'.format(self.team_two.id), {'name': 'Updated Team Name'}, format='json')
+        response = self.client.put('/api/teams/{}/'.format(self.team_two.id), {'name': 'Updated Team Name'},
+                                   format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Team.objects.count(), 2)
         self.assertEqual(Team.objects.get(pk=self.team_two.id).name, 'Updated Team Name')
+
+    def test_destroy(self):
+        response = self.client.delete('/api/teams/{}/'.format(self.team_one.id), format='json')
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(Team.objects.count(), 1)

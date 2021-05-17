@@ -9,7 +9,7 @@ from games.serializers import GameSerializer, TeamSerializer
 
 class GameViewSet(viewsets.ModelViewSet):
     """
-    Something goes here
+    Hockey games API
     """
     queryset = Game.objects.all()
     serializer_class = GameSerializer
