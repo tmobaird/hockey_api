@@ -24,13 +24,16 @@ jobs:
     # Change the version below to your required version of python
     docker:
       - image: cimg/python:3.7
+        environment:
+          DATABASE_URL: postgresql://root@localhost/hockey_api?sslmode=disable
       - image: circleci/postgres:9.6.2 # an example of how to specify a service container
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: circle_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: hockey_api
     # Checkout the code as the first step. This is a dedicated CircleCI step.
     # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
     # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
