@@ -47,3 +47,12 @@ class Game(models.Model):
 
     def away(self):
         return self.away_team
+
+
+class ApiRequest(models.Model):
+    user_agent = models.CharField(max_length=255, blank=True, null=True)
+    host = models.CharField(max_length=255, blank=True, null=True)
+    requester_ip = models.CharField(max_length=255, blank=True, null=True)
+    path = models.CharField(max_length=255, blank=True, null=True)
+    method = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
