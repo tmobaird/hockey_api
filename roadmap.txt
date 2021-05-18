@@ -23,8 +23,8 @@ Stories (icons ✓x):
     ✓ update
     ✓ destroy
 ✓ Add CircleCI for builds
+✓ Rename fields to be snake cased
 x Nested Games List under Team API (just index)
-x Rename fields to be snake cased
 x Track api requests
 x Track requesting user (no auth)
 x Add Auth for POST/PUT

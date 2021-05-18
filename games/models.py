@@ -9,20 +9,20 @@ class Team(models.Model):
         return self.name
 
     def outcomes(self):
-        games = Game.objects.filter(Q(final=True) & (Q(awayTeam=self) | Q(homeTeam=self)))
+        games = Game.objects.filter(Q(final=True) & (Q(away_team=self) | Q(home_team=self)))
         results = {'wins': 0, 'losses': 0, 'ties': 0}
         for game in games:
-            if game.awayTeam == self:
-                if game.awayTeamScore < game.homeTeamScore:
+            if game.away_team == self:
+                if game.away_team_score < game.home_team_score:
                     results['losses'] += 1
-                elif game.awayTeamScore == game.homeTeamScore:
+                elif game.away_team_score == game.home_team_score:
                     results['ties'] += 1
                 else:
                     results['wins'] += 1
             else:
-                if game.homeTeamScore < game.awayTeamScore:
+                if game.home_team_score < game.away_team_score:
                     results['losses'] += 1
-                elif game.awayTeamScore == game.homeTeamScore:
+                elif game.away_team_score == game.home_team_score:
                     results['ties'] += 1
                 else:
                     results['wins'] += 1
@@ -35,15 +35,15 @@ class Team(models.Model):
 
 class Game(models.Model):
     start = models.TimeField()
-    homeTeamScore = models.IntegerField(default=0, null=False)
-    awayTeamScore = models.IntegerField(default=0, null=False)
+    home_team_score = models.IntegerField(default=0, null=False)
+    away_team_score = models.IntegerField(default=0, null=False)
     final = models.BooleanField(default=False, null=False)
     period = models.TextField(null=False)
-    homeTeam = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_teams')
-    awayTeam = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_teams')
+    home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_teams')
+    away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_teams')
 
     def home(self):
-        return self.homeTeam
+        return self.home_team
 
     def away(self):
-        return self.awayTeam
+        return self.away_team
