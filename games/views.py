@@ -1,5 +1,7 @@
 # Create your views here.
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from games.authentication import ApiAuthentication
 from games.models import Game, Team
@@ -12,7 +14,8 @@ class GameViewSet(viewsets.ModelViewSet):
     """
     queryset = Game.objects.all()
     serializer_class = GameSerializer
-    authentication_classes = [ApiAuthentication]
+    authentication_classes = [ApiAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class TeamViewSet(viewsets.ModelViewSet):
@@ -21,4 +24,5 @@ class TeamViewSet(viewsets.ModelViewSet):
     """
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    authentication_classes = [ApiAuthentication]
+    authentication_classes = [ApiAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
