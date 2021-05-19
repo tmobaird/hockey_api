@@ -2,6 +2,7 @@ from django.utils import timezone
 from rest_framework.test import APITestCase
 
 from games.models import Game, Team, ApiRequest
+from games.tests.test_authentication import ApiAuthenticationTestHelper
 
 
 class GameApiTestCase(APITestCase):
@@ -71,12 +72,7 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(Team.objects.count(), 2)
 
     def test_tracks_api_requests(self):
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
-
-        self.assertEqual(0, ApiRequest.objects.count())
-        self.client.get('/api/games/{}/'.format(game.id), format='json')
-        self.assertEqual(1, ApiRequest.objects.count())
-        self.assertEqual('/api/games/{}/'.format(game.id), ApiRequest.objects.get().path)
+        ApiAuthenticationTestHelper.verify_behavior(self, '/api/games/')
 
 
 class TeamApiTestCase(APITestCase):
@@ -116,3 +112,6 @@ class TeamApiTestCase(APITestCase):
         response = self.client.delete('/api/teams/{}/'.format(self.team_one.id), format='json')
         self.assertEqual(response.status_code, 204)
         self.assertEqual(Team.objects.count(), 1)
+
+    def test_tracks_api_requests(self):
+        ApiAuthenticationTestHelper.verify_behavior(self, '/api/teams/')

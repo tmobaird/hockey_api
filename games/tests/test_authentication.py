@@ -5,6 +5,15 @@ from games.authentication import ApiAuthentication
 from games.models import ApiRequest
 
 
+class ApiAuthenticationTestHelper:
+    @staticmethod
+    def verify_behavior(test_case, route):
+        test_case.assertEqual(0, ApiRequest.objects.count())
+        test_case.client.get(route, format='json')
+        test_case.assertEqual(1, ApiRequest.objects.count())
+        test_case.assertEqual(route, ApiRequest.objects.get().path)
+
+
 class TestApiAuthentication(TestCase):
     def test_authenticate_creates_a_new_api_request(self):
         subject = ApiAuthentication()
