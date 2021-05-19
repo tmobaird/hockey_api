@@ -35,3 +35,6 @@ x Create options for Game period
 
 Bugs:
 x POSTs that fail for permission reasons are not saved because throttling after permissions
+
+Chores:
+x Make api auth + throttle testing more reusable
