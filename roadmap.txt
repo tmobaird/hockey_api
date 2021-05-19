@@ -28,7 +28,7 @@ Stories (icons ✓x):
 ✓ Track requesting user (no auth)
     ✓ Games
     ✓ Teams
-x Nested Games List under Team API (just index)
 ✓ Add Auth for POST/PUT/DELETE
-x Track user requests
+✓ Track user requests
+x Nested Games List under Team API (just index)
 x Create options for Game period

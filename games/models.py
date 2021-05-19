@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 
@@ -56,3 +57,4 @@ class ApiRequest(models.Model):
     path = models.CharField(max_length=255, blank=True, null=True)
     method = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    requester = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
