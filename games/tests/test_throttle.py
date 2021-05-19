@@ -1,11 +1,11 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
-from games.authentication import ApiAuthentication
 from games.models import ApiRequest
+from games.throttle import ApiThrottle
 
 
-class ApiAuthenticationTestHelper:
+class ApiThrottleTestHelper:
     @staticmethod
     def verify_behavior(test_case, route):
         test_case.assertEqual(0, ApiRequest.objects.count())
@@ -14,25 +14,27 @@ class ApiAuthenticationTestHelper:
         test_case.assertEqual(route, ApiRequest.objects.get().path)
 
 
-class TestApiAuthentication(TestCase):
-    def test_authenticate_creates_a_new_api_request(self):
-        subject = ApiAuthentication()
+class TestApiThrottle(TestCase):
+    def test_throttle_creates_a_new_api_request(self):
+        subject = ApiThrottle()
         request = MagicMock(
             META={'HTTP_USER_AGENT': 'dummy user agent', 'HTTP_HOST': 'localhost:8000', 'REMOTE_ADDR': '127.0.0.1'},
             path="/path", method="GET")
+        view = MagicMock()
 
-        self.assertEqual(0, ApiRequest.objects.count())
-        subject.authenticate(request)
+        count = ApiRequest.objects.count()
+        subject.allow_request(request, view)
 
-        self.assertEqual(1, ApiRequest.objects.count())
+        self.assertEqual(count + 1, ApiRequest.objects.count())
 
-    def test_authenticate_creates_api_request_with_attrs(self):
-        subject = ApiAuthentication()
+    def test_throttle_creates_api_request_with_attrs(self):
+        subject = ApiThrottle()
         request = MagicMock(
             META={'HTTP_USER_AGENT': 'dummy user agent', 'HTTP_HOST': 'localhost:8000', 'REMOTE_ADDR': '127.0.0.1'},
             path="/path", method="GET")
+        view = MagicMock()
 
-        subject.authenticate(request)
+        subject.allow_request(request, view)
 
         api_request = ApiRequest.objects.latest('created_at')
         self.assertEqual('dummy user agent', api_request.user_agent)

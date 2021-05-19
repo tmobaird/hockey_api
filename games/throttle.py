@@ -1,16 +1,11 @@
-from rest_framework.authentication import BaseAuthentication
+from rest_framework import throttling
 
 from games.models import ApiRequest
 
 
-class ApiUser():
-    def __init__(self, ip):
-        self.ip = ip
-
-
-class ApiAuthentication(BaseAuthentication):
-    def authenticate(self, request):
+class ApiThrottle(throttling.BaseThrottle):
+    def allow_request(self, request, view):
         ApiRequest.objects.create(user_agent=request.META.get('HTTP_USER_AGENT'), host=request.META.get('HTTP_HOST'),
                                   requester_ip=request.META.get('REMOTE_ADDR'), path=request.path,
                                   method=request.method)
-        return None
+        return True

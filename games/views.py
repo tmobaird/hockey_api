@@ -3,9 +3,9 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from games.authentication import ApiAuthentication
 from games.models import Game, Team
 from games.serializers import GameSerializer, TeamSerializer
+from games.throttle import ApiThrottle
 
 
 class GameViewSet(viewsets.ModelViewSet):
@@ -14,8 +14,9 @@ class GameViewSet(viewsets.ModelViewSet):
     """
     queryset = Game.objects.all()
     serializer_class = GameSerializer
-    authentication_classes = [ApiAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
+    throttle_classes = [ApiThrottle]
 
 
 class TeamViewSet(viewsets.ModelViewSet):
@@ -24,5 +25,6 @@ class TeamViewSet(viewsets.ModelViewSet):
     """
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    authentication_classes = [ApiAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
+    throttle_classes = [ApiThrottle]

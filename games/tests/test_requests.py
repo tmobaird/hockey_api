@@ -1,10 +1,9 @@
 from django.contrib.auth.models import User
-from django.utils import timezone
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
-from games.models import Game, Team, ApiRequest
-from games.tests.test_authentication import ApiAuthenticationTestHelper
+from games.models import Game, Team
+from games.tests.test_throttle import ApiThrottleTestHelper
 
 
 class GameApiTestCase(APITestCase):
@@ -80,22 +79,22 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(Team.objects.count(), 2)
 
     def test_tracks_api_requests(self):
-        ApiAuthenticationTestHelper.verify_behavior(self, '/api/games/')
+        ApiThrottleTestHelper.verify_behavior(self, '/api/games/')
 
     def test_post_fails_when_not_authenticated(self):
         response = self.client.post('/api/games/', {'name': 'New Team Name'}, format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_put_fails_when_not_authenticated(self):
         game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
         response = self.client.put('/api/games/{}/'.format(game.id), {'name': 'Updated Team Name'},
                                    format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_delete_fails_when_not_authenticated(self):
         game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
         response = self.client.delete('/api/games/{}/'.format(game.id), format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
 
 class TeamApiTestCase(APITestCase):
@@ -142,17 +141,17 @@ class TeamApiTestCase(APITestCase):
         self.assertEqual(Team.objects.count(), 1)
 
     def test_tracks_api_requests(self):
-        ApiAuthenticationTestHelper.verify_behavior(self, '/api/teams/')
+        ApiThrottleTestHelper.verify_behavior(self, '/api/teams/')
 
     def test_post_fails_when_not_authenticated(self):
         response = self.client.post('/api/teams/', {'name': 'New Team Name'}, format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_put_fails_when_not_authenticated(self):
         response = self.client.put('/api/teams/{}/'.format(self.team_two.id), {'name': 'Updated Team Name'},
                                    format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_delete_fails_when_not_authenticated(self):
         response = self.client.delete('/api/teams/{}/'.format(self.team_one.id), format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
