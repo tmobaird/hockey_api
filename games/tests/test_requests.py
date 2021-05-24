@@ -47,6 +47,17 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(Game.objects.count(), 1)
 
+    def test_create_fails_when_period_is_not_valid(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
+        self.assertEqual(Game.objects.count(), 0)
+        response = self.client.post('/api/games/', {'period': 'BAD PERIOD', 'start': '01:00:000', 'home_team_score': 0,
+                                                    'away_team_score': 0,
+                                                    'home_team': self.home_team.id, 'away_team': self.away_team.id,
+                                                    'final': True}, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('Period must be valid', str(response.data['period'][0]))
+        self.assertEqual(Game.objects.count(), 0)
+
     def test_update(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)

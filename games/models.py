@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 
+from games.validators import validate_period
+
 
 class Team(models.Model):
     name = models.CharField(null=False, max_length=240)
@@ -39,7 +41,7 @@ class Game(models.Model):
     home_team_score = models.IntegerField(default=0, null=False)
     away_team_score = models.IntegerField(default=0, null=False)
     final = models.BooleanField(default=False, null=False)
-    period = models.TextField(null=False)
+    period = models.TextField(null=False, validators=[validate_period])
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_teams')
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_teams')
 
