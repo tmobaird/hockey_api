@@ -166,3 +166,27 @@ class TeamApiTestCase(APITestCase):
     def test_delete_fails_when_not_authenticated(self):
         response = self.client.delete('/api/teams/{}/'.format(self.team_one.id), format='json')
         self.assertEqual(response.status_code, 401)
+
+
+class TeamGamesApiTestCase(APITestCase):
+    def setUp(self):
+        self.team_one = Team.objects.create(name="Blackhawks")
+        self.team_two = Team.objects.create(name="Maple Leafs")
+        self.user = User.objects.create(username="tester", password="password")
+        self.api_token = Token.objects.create(user=self.user)
+
+    def test_index(self):
+        game = Game.objects.create(start='01:00:00', period='1', home_team=self.team_one, away_team=self.team_two)
+        Game.objects.create(start='02:00:00', period='1', home_team=self.team_two, away_team=self.team_one)
+        response = self.client.get('/api/teams/{}/games/'.format(self.team_one.id),
+                                   format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data[0]['id'], game.id)
+        self.assertEqual(len(response.data), 2)
+
+    def test_show(self):
+        game = Game.objects.create(start='01:00:00', period='1', home_team=self.team_one, away_team=self.team_two)
+        response = self.client.get('/api/teams/{}/games/{}/'.format(self.team_one.id, game.id),
+                                   format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['id'], game.id)

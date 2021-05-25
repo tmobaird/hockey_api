@@ -1,4 +1,5 @@
 # Create your views here.
+from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -17,6 +18,11 @@ class GameViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [ApiThrottle]
+
+
+class TeamGamesViewSet(GameViewSet):
+    def get_queryset(self):
+        return Game.objects.filter(Q(away_team=self.kwargs['team_pk']) | Q(home_team=self.kwargs['team_pk']))
 
 
 class TeamViewSet(viewsets.ModelViewSet):

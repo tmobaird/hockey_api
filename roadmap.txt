@@ -30,7 +30,7 @@ Stories (icons ✓x):
     ✓ Teams
 ✓ Add Auth for POST/PUT/DELETE
 ✓ Track user requests
-x Nested Games List under Team API (just index)
+✓ Nested Games List under Team API (just index)
 ✓ Create options for Game period
 
 Bugs:
