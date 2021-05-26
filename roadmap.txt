@@ -34,6 +34,7 @@ Stories (icons ✓x):
 ✓ Create options for Game period
 ✓ Deploy
 x Add required date on game
+x Set up continuous deploys on master merges to heroku
 
 Bugs:
 x POSTs that fail for permission reasons are not saved because throttling after permissions
