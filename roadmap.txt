@@ -32,6 +32,8 @@ Stories (icons ✓x):
 ✓ Track user requests
 ✓ Nested Games List under Team API (just index)
 ✓ Create options for Game period
+✓ Deploy
+x Add required date on game
 
 Bugs:
 x POSTs that fail for permission reasons are not saved because throttling after permissions
