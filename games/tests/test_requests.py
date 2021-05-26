@@ -14,19 +14,20 @@ class GameApiTestCase(APITestCase):
         self.api_token = Token.objects.create(user=self.user)
 
     def test_index(self):
-        Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
+        Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
 
         response = self.client.get('/api/games/', format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
 
     def test_show(self):
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
 
         response = self.client.get('/api/games/{}/'.format(game.id), format='json')
         self.assertEqual(response.status_code, 200)
         self.assertIn('id', response.data)
-        self.assertIn('start', response.data)
+        self.assertIn('start_time', response.data)
+        self.assertIn('start_date', response.data)
         self.assertIn('home_team_score', response.data)
         self.assertIn('away_team_score', response.data)
         self.assertIn('final', response.data)
@@ -41,7 +42,7 @@ class GameApiTestCase(APITestCase):
     def test_create(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         self.assertEqual(Game.objects.count(), 0)
-        response = self.client.post('/api/games/', {'start': '01:00:000', 'home_team_score': 0, 'away_team_score': 0,
+        response = self.client.post('/api/games/', {'start_time': '01:00:000', 'start_date':'2021-01-01', 'home_team_score': 0, 'away_team_score': 0,
                                                     'home_team': self.home_team.id, 'away_team': self.away_team.id,
                                                     'period': 'F', 'final': True}, format='json')
         self.assertEqual(response.status_code, 201)
@@ -60,9 +61,9 @@ class GameApiTestCase(APITestCase):
 
     def test_update(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
         response = self.client.put('/api/games/{}/'.format(game.id),
-                                   {'start': '01:00:000', 'home_team_score': 2, 'away_team_score': 0,
+                                   {'start_time': '01:00:000', 'start_date': '2021-01-01', 'home_team_score': 2, 'away_team_score': 0,
                                     'home_team': self.home_team.id, 'away_team': self.away_team.id,
                                     'period': 'F', 'final': True}, format='json')
         self.assertEqual(response.status_code, 200)
@@ -82,7 +83,7 @@ class GameApiTestCase(APITestCase):
 
     def test_destroy(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
 
         response = self.client.delete('/api/games/{}/'.format(game.id), format='json')
         self.assertEqual(response.status_code, 204)
@@ -97,13 +98,13 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(response.status_code, 401)
 
     def test_put_fails_when_not_authenticated(self):
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
         response = self.client.put('/api/games/{}/'.format(game.id), {'name': 'Updated Team Name'},
                                    format='json')
         self.assertEqual(response.status_code, 401)
 
     def test_delete_fails_when_not_authenticated(self):
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.home_team, away_team=self.away_team)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
         response = self.client.delete('/api/games/{}/'.format(game.id), format='json')
         self.assertEqual(response.status_code, 401)
 
@@ -176,8 +177,8 @@ class TeamGamesApiTestCase(APITestCase):
         self.api_token = Token.objects.create(user=self.user)
 
     def test_index(self):
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.team_one, away_team=self.team_two)
-        Game.objects.create(start='02:00:00', period='1', home_team=self.team_two, away_team=self.team_one)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one, away_team=self.team_two)
+        Game.objects.create(start_time='02:00:00', start_date='2021-01-01', period='1', home_team=self.team_two, away_team=self.team_one)
         response = self.client.get('/api/teams/{}/games/'.format(self.team_one.id),
                                    format='json')
         self.assertEqual(response.status_code, 200)
@@ -185,7 +186,7 @@ class TeamGamesApiTestCase(APITestCase):
         self.assertEqual(len(response.data), 2)
 
     def test_show(self):
-        game = Game.objects.create(start='01:00:00', period='1', home_team=self.team_one, away_team=self.team_two)
+        game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one, away_team=self.team_two)
         response = self.client.get('/api/teams/{}/games/{}/'.format(self.team_one.id, game.id),
                                    format='json')
         self.assertEqual(response.status_code, 200)

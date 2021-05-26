@@ -37,7 +37,8 @@ class Team(models.Model):
 
 
 class Game(models.Model):
-    start = models.TimeField()
+    start_time = models.TimeField()
+    start_date = models.DateField()
     home_team_score = models.IntegerField(default=0, null=False)
     away_team_score = models.IntegerField(default=0, null=False)
     final = models.BooleanField(default=False, null=False)

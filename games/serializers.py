@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework.fields import IntegerField, TimeField
+from rest_framework.fields import IntegerField, TimeField, DateField
 
 from games.models import Game, Team
 from games.validators import validate_period
@@ -21,7 +21,8 @@ class TeamQuickSerializer(serializers.ModelSerializer):
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
     id = IntegerField(label='ID', read_only=True)
-    start = TimeField(required=True)
+    start_time = TimeField(required=True)
+    start_date = DateField(required=True)
     home_team_score = IntegerField(required=True)
     away_team_score = IntegerField(required=True)
     period = serializers.CharField(required=True, validators=[validate_period])
@@ -33,5 +34,5 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Game
-        fields = ['id', 'start', 'home_team_score', 'away_team_score', 'home_team', 'away_team',
+        fields = ['id', 'start_time', 'start_date', 'home_team_score', 'away_team_score', 'home_team', 'away_team',
                   'home', 'away', 'period', 'final']

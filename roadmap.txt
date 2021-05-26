@@ -33,7 +33,7 @@ Stories (icons ✓x):
 ✓ Nested Games List under Team API (just index)
 ✓ Create options for Game period
 ✓ Deploy
-x Add required date on game
+✓ Add required date on game
 x Set up continuous deploys on master merges to heroku
 
 Bugs:
