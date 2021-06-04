@@ -18,6 +18,7 @@ class GameViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [ApiThrottle]
+    filterset_fields = ['start_date', 'start_time']
 
 
 class TeamGamesViewSet(GameViewSet):
@@ -34,3 +35,4 @@ class TeamViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [ApiThrottle]
+    filterset_fields = ['name']
