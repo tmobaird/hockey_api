@@ -35,7 +35,7 @@ Stories (icons ✓x):
 ✓ Deploy
 ✓ Add required date on game
 ✓ Allow games to be filtered by start date and start time
-x Set up continuous deploys on master merges to heroku
+✓ Set up continuous deploys on master merges to heroku
 
 Bugs:
 x POSTs that fail for permission reasons are not saved because throttling after permissions
