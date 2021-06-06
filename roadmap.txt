@@ -36,6 +36,7 @@ Stories (icons ✓x):
 ✓ Add required date on game
 ✓ Allow games to be filtered by start date and start time
 ✓ Set up continuous deploys on master merges to heroku
+x Add columns to table view in admin
 
 Bugs:
 x POSTs that fail for permission reasons are not saved because throttling after permissions
