@@ -37,6 +37,17 @@ Stories (icons ✓x):
 ✓ Allow games to be filtered by start date and start time
 ✓ Set up continuous deploys on master merges to heroku
 ✓ Add columns to table view in admin
+*** Season API ***
+✓ Game relates to a season
+✓ Have a season that is current
+x Basic Season API
+    x index
+    x show
+    x create
+    x update
+    x destroy
+x Season with nested Games API
+x Record in games api is for current season
 
 Bugs:
 x POSTs that fail for permission reasons are not saved because throttling after permissions

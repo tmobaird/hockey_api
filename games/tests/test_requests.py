@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
-from games.models import Game, Team
+from games.models import Game, Team, Season
 from games.tests.test_throttle import ApiThrottleTestHelper
 
 
@@ -51,6 +51,17 @@ class GameApiTestCase(APITestCase):
                                      'period': 'F', 'final': True}, format='json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(Game.objects.count(), 1)
+
+    def test_create_game_with_default_season(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
+        self.assertEqual(Game.objects.count(), 0)
+        response = self.client.post('/api/games/',
+                                    {'start_time': '01:00:000', 'start_date': '2021-01-01', 'home_team_score': 0,
+                                     'away_team_score': 0,
+                                     'home_team': self.home_team.id, 'away_team': self.away_team.id,
+                                     'period': 'F', 'final': True}, format='json')
+        game = Game.objects.get(pk=response.data['id'])
+        self.assertIsInstance(game.season, Season)
 
     def test_create_fails_when_period_is_not_valid(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)

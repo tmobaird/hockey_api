@@ -36,6 +36,20 @@ class Team(models.Model):
         return '{}-{}-{}'.format(outcomes['wins'], outcomes['losses'], outcomes['ties'])
 
 
+class Season(models.Model):
+    name = models.CharField(null=False, max_length=240)
+    created_at = models.DateTimeField(auto_now_add=True)
+    current = models.BooleanField(default=False, null=False)
+
+    def games(self):
+        return Game.objects.filter(season=self)
+
+    @classmethod
+    def current_season_id(cls):
+        season, created = cls.objects.get_or_create(current=True, defaults={'name': 'default'})
+        return season.id
+
+
 class Game(models.Model):
     start_time = models.TimeField()
     start_date = models.DateField()
@@ -45,6 +59,7 @@ class Game(models.Model):
     period = models.TextField(null=False, validators=[validate_period])
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_teams')
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_teams')
+    season = models.ForeignKey(Season, on_delete=models.CASCADE, default=Season.current_season_id)
 
     def home(self):
         return self.home_team

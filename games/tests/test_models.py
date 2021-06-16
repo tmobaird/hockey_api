@@ -1,8 +1,11 @@
+from typing import List
+
 from django.core.exceptions import ValidationError
+from django.db.models import QuerySet
 from django.test import TestCase
 
 # Create your tests here.
-from games.models import Team, Game
+from games.models import Team, Game, Season
 
 
 class GameTestCase(TestCase):
@@ -15,15 +18,23 @@ class GameTestCase(TestCase):
 
     def test_clean_fields_fails_when_period_is_not_allowed_type(self):
         with self.assertRaises(ValidationError):
-            game = Game(start_time='10:00.000', start_date='2021-01-01', period='BAD', home_team=self.home_team, away_team=self.away_team)
+            game = Game(start_time='10:00.000', start_date='2021-01-01', period='BAD', home_team=self.home_team,
+                        away_team=self.away_team)
             game.clean_fields()
 
     def test_clean_fields_does_not_raise_when_period_is_allowed_type(self):
         try:
-            game = Game(start_time='10:00.000', start_date='2021-01-01', period='1', home_team=self.home_team, away_team=self.away_team)
+            game = Game(start_time='10:00.000', start_date='2021-01-01', period='1', home_team=self.home_team,
+                        away_team=self.away_team)
             game.clean_fields()
         except ValidationError:
             self.fail("clean_fields() raised ExceptionType unexpectedly!")
+
+    def test_sets_default_season_when_blank(self):
+        game = Game(start_time='10:00.000', start_date='2021-01-01', period='1', home_team=self.home_team,
+                    away_team=self.away_team)
+        self.assertNotEqual(game.season, None)
+        self.assertEquals(game.season.current, True)
 
 
 class TeamTestCase(TestCase):
@@ -62,3 +73,34 @@ class TeamTestCase(TestCase):
     def test__str__(self):
         team = Team.objects.create(name='Team Name')
         self.assertEquals(team.__str__(), 'Team Name')
+
+
+class SeasonTestCase(TestCase):
+    def setUp(self):
+        self.home_team = Team.objects.create(name='Home')
+        self.away_team = Team.objects.create(name='Away')
+
+    def test_season_has_games_list(self):
+        season = Season.objects.create(name='2020-2021')
+        self.assertIsInstance(season.games(), QuerySet)
+
+    def test_season_has_games_list_with_items(self):
+        season = Season.objects.create(name='2020-2021')
+        Game.objects.create(away_team=self.home_team, home_team=self.away_team, final=True, period='F',
+                            away_team_score=1,
+                            home_team_score=3, start_time='12:00:000', start_date='2021-01-01', season=season)
+        Game.objects.create(away_team=self.home_team, home_team=self.away_team, final=True, period='F',
+                            away_team_score=1,
+                            home_team_score=3, start_time='12:00:000', start_date='2021-01-01', season=season)
+        self.assertEquals(len(season.games()), 2)
+
+    def test_season_current_returns_current_season(self):
+        Season.objects.all().delete()
+        season = Season.objects.create(name='2020-2021', current=True)
+        self.assertEqual(Season.current_season_id(), season.id)
+
+    def test_season_current_does_not_return_season_when_false(self):
+        Season.objects.all().delete()
+        season = Season.objects.create(name='2019-2020', current=False)
+        Season.objects.create(name='2020-2021', current=True)
+        self.assertNotEqual(Season.current_season_id(), season.id)
