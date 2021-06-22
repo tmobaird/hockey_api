@@ -8,6 +8,7 @@ router = routers.SimpleRouter()
 
 router.register(r'games', views.GameViewSet)
 router.register(r'teams', views.TeamViewSet)
+router.register(r'seasons', views.SeasonViewSet)
 
 teams_router = routers.NestedSimpleRouter(router, r'teams', lookup='team')
 teams_router.register('games', TeamGamesViewSet, basename='team-games')

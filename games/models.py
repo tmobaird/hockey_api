@@ -44,6 +44,9 @@ class Season(models.Model):
     def games(self):
         return Game.objects.filter(season=self)
 
+    def games_count(self):
+        return self.games().count()
+
     @classmethod
     def current_season_id(cls):
         season, created = cls.objects.get_or_create(current=True, defaults={'name': 'default'})

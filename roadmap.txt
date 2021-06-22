@@ -40,12 +40,12 @@ Stories (icons ✓x):
 *** Season API ***
 ✓ Game relates to a season
 ✓ Have a season that is current
-x Basic Season API
-    x index
-    x show
-    x create
-    x update
-    x destroy
+✓ Basic Season API
+    ✓ index
+    ✓ show
+    ✓ create (not allowed)
+    ✓ update (not allowed)
+    ✓ destroy (not allowed)
 x Season with nested Games API
 x Record in games api is for current season
 

@@ -4,8 +4,8 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from games.models import Game, Team
-from games.serializers import GameSerializer, TeamSerializer
+from games.models import Game, Season, Team
+from games.serializers import GameSerializer, SeasonSerializer, TeamSerializer
 from games.throttle import ApiThrottle
 
 
@@ -36,3 +36,10 @@ class TeamViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [ApiThrottle]
     filterset_fields = ['name']
+
+class SeasonViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    NHL Season API
+    """
+    queryset = Season.objects.all()
+    serializer_class = SeasonSerializer

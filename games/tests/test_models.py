@@ -104,3 +104,13 @@ class SeasonTestCase(TestCase):
         season = Season.objects.create(name='2019-2020', current=False)
         Season.objects.create(name='2020-2021', current=True)
         self.assertNotEqual(Season.current_season_id(), season.id)
+
+    def test_season_games_count_returns_total_number_of_games(self):
+        season = Season.objects.create(name='2020-2021')
+        Game.objects.create(away_team=self.home_team, home_team=self.away_team, final=True, period='F',
+                            away_team_score=1,
+                            home_team_score=3, start_time='12:00:000', start_date='2021-01-01', season=season)
+        Game.objects.create(away_team=self.home_team, home_team=self.away_team, final=True, period='F',
+                            away_team_score=1,
+                            home_team_score=3, start_time='12:00:000', start_date='2021-01-01', season=season)
+        self.assertEqual(season.games_count(), 2)
