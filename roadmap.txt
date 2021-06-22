@@ -55,3 +55,14 @@ x Add "name" attribute to seasons api payload
 
 Chores:
 x Make api auth + throttle testing more reusable
+
+Future Ideas:
+- Players
+- Player Stats
+    - Season
+    - Career
+- Game Events
+    - Scoring
+    - Penalties
+- Awards
+- Contracts
