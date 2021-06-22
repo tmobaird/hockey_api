@@ -37,4 +37,5 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(Season)
 class SeasonAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'created_at')
+    list_filter = ('name', 'created_at')
