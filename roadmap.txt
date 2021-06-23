@@ -51,8 +51,8 @@ x Record in games api is for current season
 x Home Page
 
 Bugs:
+✓ Add "name" attribute to seasons api payload
 x POSTs that fail for permission reasons are not saved because throttling after permissions
-x Add "name" attribute to seasons api payload
 
 Chores:
 x Make api auth + throttle testing more reusable

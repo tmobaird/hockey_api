@@ -45,4 +45,4 @@ class SeasonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Season
-        fields = ['id', 'current', 'games_count']
+        fields = ['id', 'name', 'current', 'games_count']

@@ -269,6 +269,7 @@ class SeasonApiTestCase(APITestCase):
         response = self.client.get('/api/seasons/{}/'.format(season.id), format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['id'], season.id)
+        self.assertEqual(response.data['name'], '2020-2021')
         self.assertEqual(response.data['current'], False)
         self.assertEqual(response.data['games_count'], 0)
 
