@@ -46,9 +46,10 @@ Stories (icons ✓x):
     ✓ create (not allowed)
     ✓ update (not allowed)
     ✓ destroy (not allowed)
-x Season with nested Games API
-x Record in games api is for current season
+✓ Season with nested Games API
+x Record in teams api is for current season
 x Home Page
+x Pagination on Season Games API
 
 Bugs:
 ✓ Add "name" attribute to seasons api payload

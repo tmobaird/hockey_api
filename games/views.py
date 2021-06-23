@@ -43,3 +43,8 @@ class SeasonViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Season.objects.all()
     serializer_class = SeasonSerializer
+
+
+class SeasonGamesViewSet(GameViewSet):
+    def get_queryset(self):
+        return Game.objects.filter(season=self.kwargs['season_pk'])
