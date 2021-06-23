@@ -11,8 +11,8 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-    def outcomes(self):
-        games = Game.objects.filter(Q(final=True) & (Q(away_team=self) | Q(home_team=self)))
+    def outcomes(self, season):
+        games = Game.objects.filter(Q(final=True, season=season) & (Q(away_team=self) | Q(home_team=self)))
         results = {'wins': 0, 'losses': 0, 'ties': 0}
         for game in games:
             if game.away_team == self:
@@ -32,7 +32,7 @@ class Team(models.Model):
         return results
 
     def record(self):
-        outcomes = self.outcomes()
+        outcomes = self.outcomes(Season.current_season())
         return '{}-{}-{}'.format(outcomes['wins'], outcomes['losses'], outcomes['ties'])
 
 
@@ -48,9 +48,13 @@ class Season(models.Model):
         return self.games().count()
 
     @classmethod
-    def current_season_id(cls):
+    def current_season(cls):
         season, created = cls.objects.get_or_create(current=True, defaults={'name': 'default'})
-        return season.id
+        return season
+
+    @classmethod
+    def current_season_id(cls):
+        return cls.current_season().id
 
 
 class Game(models.Model):

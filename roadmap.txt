@@ -47,7 +47,7 @@ Stories (icons ✓x):
     ✓ update (not allowed)
     ✓ destroy (not allowed)
 ✓ Season with nested Games API
-x Record in teams api is for current season
+✓ Record in teams api is for current season
 x Home Page
 x Pagination on Season Games API
 

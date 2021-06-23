@@ -74,6 +74,21 @@ class TeamTestCase(TestCase):
         team = Team.objects.create(name='Team Name')
         self.assertEquals(team.__str__(), 'Team Name')
 
+    def test_record_includes_games_for_current_season(self):
+        season, create = Season.objects.get_or_create(current=True, defaults={'name': '2020-2021'})
+        team = Team.objects.create(name="Team Name")
+        Game.objects.create(away_team=team, home_team=self.other_team, final=True, period='3', away_team_score=5,
+                            home_team_score=6, start_time='12:00:000', start_date='2021-01-01', season=season)
+        self.assertEquals('0-1-0', team.record())
+
+    def test_record_does_not_include_games_for_non_current_season(self):
+        season = Season.objects.create(name='2019-2020', current=False)
+        team = Team.objects.create(name='Team Name')
+        Game.objects.create(away_team=team, home_team=self.other_team, final=True, period='3', away_team_score=5,
+                            home_team_score=6, start_time='12:00:000', start_date='2021-01-01', season=season)
+        self.assertEquals('0-0-0', team.record())
+
+
 
 class SeasonTestCase(TestCase):
     def setUp(self):
@@ -114,3 +129,10 @@ class SeasonTestCase(TestCase):
                             away_team_score=1,
                             home_team_score=3, start_time='12:00:000', start_date='2021-01-01', season=season)
         self.assertEqual(season.games_count(), 2)
+
+    def test_current_season_returns_season(self):
+        Season.objects.all().delete()
+        season = Season.objects.create(name='2020-2021', current=True)
+        season_two = Season.objects.create(name='2019-2020', current=False)
+        self.assertEqual(Season.current_season().id, season.id)
+        self.assertNotEqual(Season.current_season().id, season_two.id)
