@@ -3,9 +3,8 @@ from typing import List
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.test import TestCase
-
 # Create your tests here.
-from games.models import Team, Game, Season
+from games.models import Game, Season, Team
 
 
 class GameTestCase(TestCase):

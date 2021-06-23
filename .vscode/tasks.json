@@ -8,6 +8,16 @@
             "type": "shell",
             "command": "python3 manage.py test",
             "problemMatcher": []
+        },
+        {
+            "label": "start django server",
+            "type": "shell",
+            "command": "python manage.py runserver"
+        },
+        {
+            "label": "start django shell",
+            "type": "shell",
+            "command": "python manage.py shell"
         }
     ]
 }
