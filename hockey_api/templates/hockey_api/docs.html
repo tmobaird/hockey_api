@@ -1,0 +1,89 @@
+{% load static %}
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .fas {
+            line-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="px-4 pt-5 my-5 text-center">
+        <h1 class="display-4 fw-bold">The Hockey API - Dictionary</h1>
+        <div class="col-lg-6 mx-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Method</th>
+                        <th scope="col" colspan="2">Action
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Teams</td>
+                        <td><a href="/api/teams/" class="link-primary">/api/team/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Team</td>
+                        <td><a href="/api/team/1/" class="link-primary">/api/team/:team_id/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Games</td>
+                        <td><a href="/api/games/" class="link-primary">/api/games/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Game</td>
+                        <td><a href="/api/games/1/" class="link-primary">/api/games/:game_id/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Seasons</td>
+                        <td><a href="/api/seasons/" class="link-primary">/api/seasons/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Season</td>
+                        <td><a href="/api/seasons/1/" class="link-primary">/api/seasons/:season_id/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Games By Team</td>
+                        <td><a href="/api/teams/1/games/" class="link-primary">/api/teams/:team_id/games/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Game by Team</td>
+                        <td><a href="/api/teams/1/games/1/" class="link-primary">/api/teams/:team_id/games/:game_id/</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Games By Season</td>
+                        <td><a href="/api/seasons/1/games/" class="link-primary">/api/seasons/:season_id/games/</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-success">GET</span></td>
+                        <td>Game By Season</td>
+                        <td><a href="/api/seasons/1/games/1/"
+                                class="link-primary">/api/seasons/:season_id/games/:game_id/</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><a href="/" class="link-secondary">Back to Home</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -19,6 +19,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('docs/', views.docs, name='docs'),
     path('api/', include('games.urls')),
     path('admin/', admin.site.urls)
 ]

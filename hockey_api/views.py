@@ -15,3 +15,6 @@ def home(request):
         RoadmapItem('Advanced Game Stats', False, None),
     ]
     return render(request, 'hockey_api/index.html', {'roadmap': roadmap})
+
+def docs(request):
+    return render(request, 'hockey_api/docs.html', {})
