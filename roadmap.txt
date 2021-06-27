@@ -48,7 +48,7 @@ Stories (icons ✓x):
     ✓ destroy (not allowed)
 ✓ Season with nested Games API
 ✓ Record in teams api is for current season
-x Home Page
+✓ Home Page
 x Add insomnia config to docs
 x Pagination on Season Games API
 
