@@ -1,6 +1,7 @@
 from hockey_api.view_helpers import RoadmapItem
 from django.http.response import HttpResponse
 from django.shortcuts import render
+import os
 
 def home(request):
     roadmap = [
@@ -17,4 +18,5 @@ def home(request):
     return render(request, 'hockey_api/index.html', {'roadmap': roadmap})
 
 def docs(request):
-    return render(request, 'hockey_api/docs.html', {})
+    insomnia_file_url = os.environ.get('INSOMNIA_FILE_URL')
+    return render(request, 'hockey_api/docs.html', {'insomnia_file_url': insomnia_file_url})
