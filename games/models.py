@@ -83,3 +83,11 @@ class ApiRequest(models.Model):
     method = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     requester = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+
+
+class Player(models.Model):
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
+    number = models.IntegerField(blank=True, null=True)
+    position = models.CharField(max_length=255, blank=True, null=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)

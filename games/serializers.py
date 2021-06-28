@@ -2,7 +2,7 @@ from django.forms.fields import BooleanField
 from rest_framework import serializers
 from rest_framework.fields import IntegerField, TimeField, DateField
 
-from games.models import Game, Season, Team
+from games.models import Game, Player, Season, Team
 from games.validators import validate_period
 
 
@@ -46,3 +46,16 @@ class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
         fields = ['id', 'name', 'current', 'games_count']
+
+
+class PlayerSerializer(serializers.ModelSerializer):
+    id = IntegerField(label='ID', read_only=True)
+    first_name = serializers.CharField(label='First Name')
+    last_name = serializers.CharField(label='Last Name')
+    position = serializers.CharField(label='Position')
+    team = TeamQuickSerializer(read_only=True)
+    team_id = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), write_only=True, source='team')
+
+    class Meta:
+        model = Player
+        fields = ['id', 'first_name', 'last_name', 'position', 'team_id', 'team']

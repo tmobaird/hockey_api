@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.test import TestCase
 # Create your tests here.
-from games.models import Game, Season, Team
+from games.models import Game, Player, Season, Team
 
 
 class GameTestCase(TestCase):
@@ -135,3 +135,10 @@ class SeasonTestCase(TestCase):
         season_two = Season.objects.create(name='2019-2020', current=False)
         self.assertEqual(Season.current_season().id, season.id)
         self.assertNotEqual(Season.current_season().id, season_two.id)
+
+
+class PlayerTestCase(TestCase):
+    def test_creation_works(self):
+        team = Team.objects.create(name='Chicago Blackhawks')
+        player = Player.objects.create(first_name='Jonathan', last_name='Toews', number=19, position='C', team=team)
+        self.assertIsInstance(player.id, int)
