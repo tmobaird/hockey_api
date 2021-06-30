@@ -4,6 +4,13 @@ from games.tests.test_throttle import ApiThrottleTestHelper
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
+class TeamFactory:
+    @staticmethod
+    def create(attrs=None):
+        if attrs is None:
+            attrs = {}
+        return Team.objects.create(name=attrs.get('name') or 'Team Name')
+
 
 class TeamApiTestCase(APITestCase):
     def setUp(self):

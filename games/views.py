@@ -37,6 +37,7 @@ class TeamViewSet(viewsets.ModelViewSet):
     throttle_classes = [ApiThrottle]
     filterset_fields = ['name']
 
+
 class SeasonViewSet(viewsets.ReadOnlyModelViewSet):
     """
     NHL Season API
@@ -60,3 +61,20 @@ class PlayerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [ApiThrottle]
     filterset_fields = ['first_name', 'last_name', 'number', 'position', 'team_id']
+
+
+class ReadOnlyPlayerViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Players API
+    """
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    throttle_classes = [ApiThrottle]
+    filterset_fields = ['first_name', 'last_name', 'number', 'position', 'team_id']
+
+
+class TeamPlayersViewSet(ReadOnlyPlayerViewSet):
+    def get_queryset(self):
+        return Player.objects.filter(team=self.kwargs['team_pk'])

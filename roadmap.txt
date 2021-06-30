@@ -59,12 +59,15 @@ Stories (icons ✓x):
     ✓ update roadmap html
     ✓ update docs html
     ✓ update insomnia config
-x Team Players API
-    x index
-    x show
-    x create (not allowed)
-    x update (not allowed)
-    x destroy (not allowed)
+✓ Team Players API
+    ✓ index
+    ✓ show
+    ✓ create (not allowed)
+    ✓ update (not allowed)
+    ✓ destroy (not allowed)
+    x update roadmap html
+    x update docs html
+    x update insomnia config
 x Pagination on Season Games API
 
 Bugs:
