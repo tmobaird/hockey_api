@@ -3,10 +3,10 @@
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style>
         .fas {
             line-height: 24px;
@@ -15,99 +15,111 @@
 </head>
 
 <body>
-    <div class="px-4 pt-5 my-5 text-center border-bottom">
-        <h1 class="display-4 fw-bold">The Hockey API - Dictionary</h1>
-        <div class="col-lg-6 mx-auto">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Method</th>
-                        <th scope="col">Action</th>
-                        <th scope="col">Route</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Teams</td>
-                        <td><a href="/api/teams/" class="link-primary">/api/teams/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Team</td>
-                        <td><a href="/api/team/1/" class="link-primary">/api/teams/:team_id/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Games</td>
-                        <td><a href="/api/games/" class="link-primary">/api/games/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Game</td>
-                        <td><a href="/api/games/1/" class="link-primary">/api/games/:game_id/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Seasons</td>
-                        <td><a href="/api/seasons/" class="link-primary">/api/seasons/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Season</td>
-                        <td><a href="/api/seasons/1/" class="link-primary">/api/seasons/:season_id/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Games By Team</td>
-                        <td><a href="/api/teams/1/games/" class="link-primary">/api/teams/:team_id/games/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Game by Team</td>
-                        <td><a href="/api/teams/1/games/1/" class="link-primary">/api/teams/:team_id/games/:game_id/</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Games By Season</td>
-                        <td><a href="/api/seasons/1/games/" class="link-primary">/api/seasons/:season_id/games/</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge bg-success">GET</span></td>
-                        <td>Game By Season</td>
-                        <td><a href="/api/seasons/1/games/1/"
-                                class="link-primary">/api/seasons/:season_id/games/:game_id/</a></td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+    <h1 class="display-4 fw-bold">The Hockey API - Dictionary</h1>
+    <div class="col-lg-6 mx-auto">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Method</th>
+                <th scope="col">Action</th>
+                <th scope="col">Route</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Teams</td>
+                <td><a href="/api/teams/" class="link-primary">/api/teams/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Team</td>
+                <td><a href="/api/team/1/" class="link-primary">/api/teams/:team_id/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Games</td>
+                <td><a href="/api/games/" class="link-primary">/api/games/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Game</td>
+                <td><a href="/api/games/1/" class="link-primary">/api/games/:game_id/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Seasons</td>
+                <td><a href="/api/seasons/" class="link-primary">/api/seasons/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Season</td>
+                <td><a href="/api/seasons/1/" class="link-primary">/api/seasons/:season_id/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Games By Team</td>
+                <td><a href="/api/teams/1/games/" class="link-primary">/api/teams/:team_id/games/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Game by Team</td>
+                <td><a href="/api/teams/1/games/1/" class="link-primary">/api/teams/:team_id/games/:game_id/</a>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Games By Season</td>
+                <td><a href="/api/seasons/1/games/" class="link-primary">/api/seasons/:season_id/games/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Game By Season</td>
+                <td><a href="/api/seasons/1/games/1/"
+                       class="link-primary">/api/seasons/:season_id/games/:game_id/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Players</td>
+                <td><a href="/api/players/"
+                       class="link-primary">/api/players/</a></td>
+            </tr>
+            <tr>
+                <td><span class="badge bg-success">GET</span></td>
+                <td>Player</td>
+                <td><a href="/api/players/1/"
+                       class="link-primary">/api/players/:id/</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="{% static 'hockey_api/screenshot-1.png' %}" class="d-block mx-lg-auto img-fluid rounded"
+                 alt="Bootstrap Themes" loading="lazy" width="700" height="500">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">The Hockey API + Insomnia</h1>
+            <p class="lead">Using an easy-to-use API client makes the process of testing, debugging, and developing
+                APIs much more smooth.
+                <a href="https://insomnia.rest/" target="_blank" rel="noopener noreferrer">Insomnia</a> is one of
+                the best in this department. Because of this, The Hockey API
+                provides an Insomnia configuration file for all users.
+                Simply click the Download button below, download the json configuration, then in Insomnia click
+                "Import" and import the json file. This will create
+                a new collection in your Insomnia with all the requests you will need for The Hockey API. Enjoy!
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{{ insomnia_file_url }}" class="btn btn-primary btn-lg px-4 me-md-2" target="_blank"
+                   rel="noopener noreferrer">Download</a>
+            </div>
         </div>
     </div>
-    <div class="container col-xxl-8 px-4 py-5">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-10 col-sm-8 col-lg-6">
-                <img src="{% static 'hockey_api/screenshot-1.png' %}" class="d-block mx-lg-auto img-fluid rounded"
-                    alt="Bootstrap Themes" loading="lazy" width="700" height="500">
-            </div>
-            <div class="col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">The Hockey API + Insomnia</h1>
-                <p class="lead">Using an easy-to-use API client makes the process of testing, debugging, and developing
-                    APIs much more smooth.
-                    <a href="https://insomnia.rest/" target="_blank" rel="noopener noreferrer">Insomnia</a> is one of
-                    the best in this department. Because of this, The Hockey API
-                    provides an Insomnia configuration file for all users.
-                    Simply click the Download button below, download the json configuration, then in Insomnia click
-                    "Import" and import the json file. This will create
-                    a new collection in your Insomnia with all the requests you will need for The Hockey API. Enjoy!
-                </p>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <a href="{{ insomnia_file_url }}" class="btn btn-primary btn-lg px-4 me-md-2" target="_blank"
-                        rel="noopener noreferrer">Download</a>
-                </div>
-            </div>
-        </div>
-        <p><a href="/" class="link-secondary">Back to Home</a></p>
-    </div>
+    <p><a href="/" class="link-secondary">Back to Home</a></p>
+</div>
 </body>
 
 </html>

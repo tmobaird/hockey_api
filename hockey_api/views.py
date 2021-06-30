@@ -10,7 +10,7 @@ def home(request):
         RoadmapItem('Season API', True, None),
         RoadmapItem('Nested Team Games API', True, 'Updated Daily'),
         RoadmapItem('Nested Season Games API', True, 'Updated Daily'),
-        RoadmapItem('Players API', False, None),
+        RoadmapItem('Players API', True, None),
         RoadmapItem('Player Stats', False, None),
         RoadmapItem('Game Events API', False, None),
         RoadmapItem('Advanced Game Stats', False, None),

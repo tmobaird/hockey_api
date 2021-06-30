@@ -50,6 +50,21 @@ Stories (icons ✓x):
 ✓ Record in teams api is for current season
 ✓ Home Page
 ✓ Add insomnia config to docs
+x Basic Players API
+    ✓ index
+    ✓ show
+    ✓ create
+    ✓ update
+    ✓ destroy
+    ✓ update roadmap html
+    ✓ update docs html
+    x update insomnia config
+x Team Players API
+    x index
+    x show
+    x create (not allowed)
+    x update (not allowed)
+    x destroy (not allowed)
 x Pagination on Season Games API
 
 Bugs:
