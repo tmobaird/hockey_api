@@ -65,8 +65,8 @@ Stories (icons ✓x):
     ✓ create (not allowed)
     ✓ update (not allowed)
     ✓ destroy (not allowed)
-    x update roadmap html
-    x update docs html
+    ✓ update roadmap html
+    ✓ update docs html
     x update insomnia config
 x Pagination on Season Games API
 
