@@ -50,7 +50,7 @@ Stories (icons ✓x):
 ✓ Record in teams api is for current season
 ✓ Home Page
 ✓ Add insomnia config to docs
-x Basic Players API
+✓ Basic Players API
     ✓ index
     ✓ show
     ✓ create
@@ -58,7 +58,7 @@ x Basic Players API
     ✓ destroy
     ✓ update roadmap html
     ✓ update docs html
-    x update insomnia config
+    ✓ update insomnia config
 x Team Players API
     x index
     x show
