@@ -73,12 +73,12 @@ x Pagination on Season Games API
 Bugs:
 ✓ Add "name" attribute to seasons api payload
 x POSTs that fail for permission reasons are not saved because throttling after permissions
+x Include number in Player serializer
 
 Chores:
 x Make api auth + throttle testing more reusable
 
 Future Ideas:
-- Players
 - Player Stats
     - Season
     - Career
