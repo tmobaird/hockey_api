@@ -53,9 +53,10 @@ class PlayerSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(label='First Name')
     last_name = serializers.CharField(label='Last Name')
     position = serializers.CharField(label='Position')
+    number = serializers.IntegerField(label='Number')
     team = TeamQuickSerializer(read_only=True)
     team_id = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), write_only=True, source='team')
 
     class Meta:
         model = Player
-        fields = ['id', 'first_name', 'last_name', 'position', 'team_id', 'team']
+        fields = ['id', 'first_name', 'last_name', 'position', 'number', 'team_id', 'team']

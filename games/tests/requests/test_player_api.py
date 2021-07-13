@@ -37,12 +37,13 @@ class PlayerApiTestCase(APITestCase):
         self.assertEquals(response.data['first_name'], 'Jonathan')
         self.assertEquals(response.data['last_name'], 'Toews')
         self.assertEquals(response.data['position'], 'C')
+        self.assertEquals(response.data['number'], player.number)
         self.assertEquals(response.data['team']['id'], team.id)
 
     def test_create(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         team = Team.objects.create(name='Chicago Blackhawks')
-        response = self.client.post('/api/players/', {'first_name': 'Patrick', 'last_name': 'Kane', 'position': 'RW', 'team_id': team.id}, format='json')
+        response = self.client.post('/api/players/', {'first_name': 'Patrick', 'last_name': 'Kane', 'position': 'RW', 'number': 88, 'team_id': team.id}, format='json')
         self.assertEquals(response.status_code, 201)
         self.assertEqual(response.data['first_name'], 'Patrick')
         self.assertEqual(response.data['last_name'], 'Kane')
