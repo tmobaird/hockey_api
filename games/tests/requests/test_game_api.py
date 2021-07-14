@@ -19,7 +19,7 @@ class GameApiTestCase(APITestCase):
 
         response = self.client.get('/api/games/', format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_show(self):
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team,

@@ -19,8 +19,8 @@ class TeamGamesApiTestCase(APITestCase):
         response = self.client.get('/api/teams/{}/games/'.format(self.team_one.id),
                                    format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data[0]['id'], game.id)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['results'][0]['id'], game.id)
 
     def test_index_can_be_filtered_by_start_date(self):
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one,
@@ -31,8 +31,8 @@ class TeamGamesApiTestCase(APITestCase):
         response = self.client.get('/api/teams/{}/games/?start_date=2021-01-02'.format(self.team_one.id),
                                    format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['id'], game_two.id)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['id'], game_two.id)
 
     def test_index_can_be_filtered_by_start_time(self):
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one,
@@ -43,8 +43,8 @@ class TeamGamesApiTestCase(APITestCase):
         response = self.client.get('/api/teams/{}/games/?start_time=01:00:00'.format(self.team_one.id),
                                    format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['id'], game.id)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['id'], game.id)
 
     def test_index_can_be_filtered_by_start_date_and_time(self):
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one,
@@ -58,8 +58,8 @@ class TeamGamesApiTestCase(APITestCase):
         response = self.client.get('/api/teams/{}/games/?start_time=02:30:00&start_date=2021-01-03'.format(self.team_one.id),
                                    format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['id'], game_three.id)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['id'], game_three.id)
 
     def test_show(self):
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one,

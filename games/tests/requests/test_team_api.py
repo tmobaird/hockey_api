@@ -22,16 +22,16 @@ class TeamApiTestCase(APITestCase):
     def test_index(self):
         response = self.client.get('/api/teams/', format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 2)
-        self.assertIn('id', response.data[0])
-        self.assertIn('name', response.data[0])
-        self.assertEqual('Blackhawks', response.data[0]['name'])
-        self.assertIn('record', response.data[0])
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertIn('id', response.data['results'][0])
+        self.assertIn('name', response.data['results'][0])
+        self.assertEqual('Blackhawks', response.data['results'][0]['name'])
+        self.assertIn('record', response.data['results'][0])
 
     def test_index_can_be_filtered_by_name(self):
         response = self.client.get('/api/teams/?name=Blackhawks', format='json')
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['id'], self.team_one.id)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['id'], self.team_one.id)
 
     def test_show(self):
         response = self.client.get('/api/teams/{}/'.format(self.team_one.id), format='json')

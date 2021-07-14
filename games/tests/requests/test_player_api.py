@@ -26,7 +26,7 @@ class PlayerApiTestCase(APITestCase):
         PlayerFactory.create()
         response = self.client.get('/api/players/', format='json')
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(len(response.data), 1)
+        self.assertEquals(len(response.data['results']), 1)
 
     def test_show(self):
         team = Team.objects.create(name='Chicago Blackhawks')
@@ -88,4 +88,4 @@ class PlayerApiTestCase(APITestCase):
         team_two = Team.objects.create(name='Team Two')
         PlayerFactory.create({'team': team_two})
         response = self.client.get('/api/players/?team_id={}'.format(team.id), format='json')
-        self.assertEquals(len(response.data), 2)
+        self.assertEquals(len(response.data['results']), 2)

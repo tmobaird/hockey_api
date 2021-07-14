@@ -17,7 +17,7 @@ class SeasonGamesApiTestCase(APITestCase):
                                    away_team=self.team_two, season=self.season)
         response = self.client.get('/api/seasons/{}/games/'.format(self.season.id))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
     
     def test_show(self):
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.team_one,

@@ -68,7 +68,7 @@ Stories (icons ✓x):
     ✓ update roadmap html
     ✓ update docs html
     x update insomnia config
-x Pagination on Season Games API
+✓ Pagination on Season Games API
 
 Bugs:
 ✓ Add "name" attribute to seasons api payload
