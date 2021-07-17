@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from games.models import ApiRequest, Game, Team, Season, Player
+from games.models import ApiRequest, Game, Team, Season, Player, GameEvent
 
 
 @admin.register(ApiRequest)
@@ -45,3 +45,8 @@ class SeasonAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ('id','first_name','last_name','number','position','team')
     list_filter = ('position','team')
+
+
+@admin.register(GameEvent)
+class GameEventAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'game', 'scorer', 'primary_assister', 'secondary_assister', 'created_at')

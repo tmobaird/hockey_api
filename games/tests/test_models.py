@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.test import TestCase
 # Create your tests here.
-from games.models import Game, Player, Season, Team
+from games.models import Game, Player, Season, Team, GameEvent
+from games.tests.requests.test_player_api import PlayerFactory
 
 
 class GameTestCase(TestCase):
@@ -142,3 +143,36 @@ class PlayerTestCase(TestCase):
         team = Team.objects.create(name='Chicago Blackhawks')
         player = Player.objects.create(first_name='Jonathan', last_name='Toews', number=19, position='C', team=team)
         self.assertIsInstance(player.id, int)
+
+    def test__str__(self):
+        player = PlayerFactory.create({'first_name': 'Patrick', 'last_name': 'Kane'})
+        self.assertEqual(player.__str__(), 'Patrick Kane')
+
+
+class GameEventTestCase(TestCase):
+    def setUp(self):
+        self.home_team = Team.objects.create(name='Home')
+        self.away_team = Team.objects.create(name='Away')
+        self.season = Season.objects.create(name='2020-2021', current=True)
+        self.game = Game.objects.create(away_team=self.home_team, home_team=self.away_team, final=True, period='F',
+                                   away_team_score=1,
+                                   home_team_score=3, start_time='12:00:000', start_date='2021-01-01',
+                                   season=self.season)
+        self.player = PlayerFactory.create()
+        self.assister = PlayerFactory.create()
+        self.secondary = PlayerFactory.create()
+
+    def test_creation_works(self):
+        event = GameEvent.objects.create(type='scoring', game=self.game, scorer=self.player, primary_assister=self.assister, secondary_assister=self.secondary)
+        self.assertIsInstance(event.id, int)
+        self.assertEqual(event.type, 'scoring')
+        self.assertEqual(event.game, self.game)
+        self.assertEqual(event.scorer, self.player)
+        self.assertEqual(event.primary_assister, self.assister)
+        self.assertEqual(event.secondary_assister, self.secondary)
+
+    def test_creation_fails_with_invalid_type(self):
+        with self.assertRaises(ValidationError):
+            event = GameEvent.objects.create(type='blah', game=self.game, scorer=self.player,
+                                         primary_assister=self.assister, secondary_assister=self.secondary)
+            event.clean_fields()

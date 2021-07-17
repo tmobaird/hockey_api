@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 
-from games.validators import validate_period
+from games.validators import validate_period, validate_event_type
 
 
 class Team(models.Model):
@@ -91,3 +91,16 @@ class Player(models.Model):
     number = models.IntegerField(blank=True, null=True)
     position = models.CharField(max_length=255, blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
+
+class GameEvent(models.Model):
+    type = models.CharField(null=False, max_length=50, validators=[validate_event_type])
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=False, null=False)
+    scorer = models.ForeignKey(Player, on_delete=models.CASCADE, blank=False, null=False, related_name='scorers')
+    primary_assister = models.ForeignKey(Player, on_delete=models.CASCADE, blank=True, null=True, related_name='primary_assisters')
+    secondary_assister = models.ForeignKey(Player, on_delete=models.CASCADE, blank=True, null=True, related_name='secondary_assisters')
+    created_at = models.DateTimeField(auto_now_add=True)
+
