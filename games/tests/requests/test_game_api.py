@@ -3,15 +3,22 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 from games.models import Team, Game, Season
+from games.tests.requests.utils import setup_api_auth
 from games.tests.test_throttle import ApiThrottleTestHelper
+
+TEST_REQUIRING_AUTH = ['test_create',
+                       'test_create_game_with_default_season',
+                       'test_create_fails_when_period_is_not_valid',
+                       'test_update',
+                       'test_update_returns_400',
+                       'test_destroy']
 
 
 class GameApiTestCase(APITestCase):
     def setUp(self):
         self.home_team = Team.objects.create(name="Blackhawks")
         self.away_team = Team.objects.create(name="Maple Leafs")
-        self.user = User.objects.create(username="tester", password="password")
-        self.api_token = Token.objects.create(user=self.user)
+        setup_api_auth(self, TEST_REQUIRING_AUTH)
 
     def test_index(self):
         Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team,
@@ -42,7 +49,6 @@ class GameApiTestCase(APITestCase):
         self.assertIn('name', response.data['away'])
 
     def test_create(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         self.assertEqual(Game.objects.count(), 0)
         response = self.client.post('/api/games/',
                                     {'start_time': '01:00:000', 'start_date': '2021-01-01', 'home_team_score': 0,
@@ -53,7 +59,6 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(Game.objects.count(), 1)
 
     def test_create_game_with_default_season(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         self.assertEqual(Game.objects.count(), 0)
         response = self.client.post('/api/games/',
                                     {'start_time': '01:00:000', 'start_date': '2021-01-01', 'home_team_score': 0,
@@ -64,7 +69,6 @@ class GameApiTestCase(APITestCase):
         self.assertIsInstance(game.season, Season)
 
     def test_create_fails_when_period_is_not_valid(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         self.assertEqual(Game.objects.count(), 0)
         response = self.client.post('/api/games/', {'period': 'BAD PERIOD', 'start': '01:00:000', 'home_team_score': 0,
                                                     'away_team_score': 0,
@@ -75,7 +79,6 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(Game.objects.count(), 0)
 
     def test_update(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team,
                                    away_team=self.away_team)
         response = self.client.put('/api/games/{}/'.format(game.id),
@@ -91,7 +94,6 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(game.final, True)
 
     def test_update_returns_400(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         response = self.client.put('/api/games/99999/',
                                    {'start': '01:00:000', 'home_team_score': 2, 'away_team_score': 0,
                                     'home_team': self.home_team.id, 'away_team': self.away_team.id,
@@ -99,7 +101,6 @@ class GameApiTestCase(APITestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_destroy(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         game = Game.objects.create(start_time='01:00:00', start_date='2021-01-01', period='1', home_team=self.home_team,
                                    away_team=self.away_team)
 

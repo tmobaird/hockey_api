@@ -1,8 +1,7 @@
-from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 from games.models import Player, Team, ApiRequest
+from games.tests.requests.utils import setup_api_auth
 
 
 class PlayerFactory:
@@ -17,10 +16,13 @@ class PlayerFactory:
             team=attrs.get('team') or Team.objects.create(name='Dummy')
         )
 
+
+TESTS_REQUIRING_AUTH = ['test_create', 'test_update', 'test_destroy']
+
+
 class PlayerApiTestCase(APITestCase):
     def setUp(self):
-        self.user = User.objects.create(username="tester", password="password")
-        self.api_token = Token.objects.create(user=self.user)
+        setup_api_auth(self, TESTS_REQUIRING_AUTH)
 
     def test_index(self):
         PlayerFactory.create()
@@ -30,7 +32,7 @@ class PlayerApiTestCase(APITestCase):
 
     def test_show(self):
         team = Team.objects.create(name='Chicago Blackhawks')
-        player = PlayerFactory.create({'first_name': 'Jonathan', 'last_name': 'Toews', 'position':'C', 'team':team})
+        player = PlayerFactory.create({'first_name': 'Jonathan', 'last_name': 'Toews', 'position': 'C', 'team': team})
         response = self.client.get('/api/players/{}/'.format(player.id), format='json')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.data['id'], player.id)
@@ -41,9 +43,10 @@ class PlayerApiTestCase(APITestCase):
         self.assertEquals(response.data['team']['id'], team.id)
 
     def test_create(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         team = Team.objects.create(name='Chicago Blackhawks')
-        response = self.client.post('/api/players/', {'first_name': 'Patrick', 'last_name': 'Kane', 'position': 'RW', 'number': 88, 'team_id': team.id}, format='json')
+        response = self.client.post('/api/players/',
+                                    {'first_name': 'Patrick', 'last_name': 'Kane', 'position': 'RW', 'number': 88,
+                                     'team_id': team.id}, format='json')
         self.assertEquals(response.status_code, 201)
         self.assertEqual(response.data['first_name'], 'Patrick')
         self.assertEqual(response.data['last_name'], 'Kane')
@@ -52,16 +55,15 @@ class PlayerApiTestCase(APITestCase):
         self.assertEqual(response.data['team']['name'], team.name)
 
     def test_update(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         player = PlayerFactory.create({'first_name': 'Patty', 'last_name': 'Kane', 'position': 'C'})
-        response = self.client.patch('/api/players/{}/'.format(player.id), { 'first_name': 'Patrick', 'last_name': 'Kane', 'position': 'RW' }, format='json')
+        response = self.client.patch('/api/players/{}/'.format(player.id),
+                                     {'first_name': 'Patrick', 'last_name': 'Kane', 'position': 'RW'}, format='json')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.data['first_name'], 'Patrick')
         self.assertEquals(response.data['last_name'], 'Kane')
         self.assertEquals(response.data['position'], 'RW')
 
     def test_destroy(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.api_token.key)
         player = PlayerFactory.create()
         response = self.client.delete('/api/players/{}/'.format(player.id), format='json')
         self.assertEquals(response.status_code, 204)
